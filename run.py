@@ -82,12 +82,14 @@ def open_pdf_dir(pdf_path):
 
 
 def list_pdfs(pdf_dir):
-    all_pdfs = []
-    files = pdf_dir.iterdir()
-    for f in files:
-        if f.suffix in [".pdf", ".PDF"]:
-            all_pdfs.append(f)
-    return all_pdfs
+    pdf_files = []
+
+    for pdf_path in directory.rglob("*"):
+        if pdf_path.suffix.lower() == ".pdf":  # Case-insensitive extension check
+#            if any(word in pdf_path.stem.lower() for word in ["etude", "étude"]):
+	    pdf_files.append(pdf_path)
+
+    return pdf_files
 
 
 def process_text(filename, base_prompt, fields, model, client):
